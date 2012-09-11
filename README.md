@@ -1,8 +1,15 @@
-# pat (formerly pat.go) - A Sinatra style pattern muxer for Go's net/http library
+# pat - A regexp pattern muxer for Go's net/http library
+
+Fork of github.com/bmizerany/pat that replaces the homebrew pattern matching
+stuff with plain old regexps (re2) because one didn't seem to exist.
+
+* http://github.com/shanna/pat
+* http://golang.org/pkg/regexp/
+* http://code.google.com/p/re2/wiki/Syntax
 
 ## INSTALL
 
-	$ go get github.com/bmizerany/pat
+	$ go get github.com/shanna/pat
 
 ## USE
 
@@ -11,7 +18,7 @@
 	import (
 		"io"
 		"net/http"
-		"github.com/bmizerany/pat"
+		"github.com/shanna/pat"
 		"log"
 	)
 
@@ -22,7 +29,7 @@
 
 	func main() {
 		m := pat.New()
-		m.Get("/hello/:name", http.HandlerFunc(HelloServer))
+		m.Get("^/hello/(?P<name>[^/#?]+)$", http.HandlerFunc(HelloServer))
 
 		// Register this pat with the default serve mux so that other packages
 		// may also be exported. (i.e. /debug/pprof/*)
@@ -34,16 +41,6 @@
 	}
 	
 It's that simple.
-
-For more information, see:
-http://gopkgdoc.appspot.com/pkg/github.com/bmizerany/pat
-
-## CONTRIBUTORS
-
-* Keith Rarick (@krarick) - github.com/kr
-* Blake Mizerany (@bmizerany) - github.com/bmizerany
-* Evan Shaw
-* George Rogers
 
 ## LICENSE
 
